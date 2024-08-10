@@ -1,37 +1,32 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Course Online Hasnur
+Selamat datang di proyek Course Online Hasnur! Ini adalah aplikasi Next.js yang dirancang untuk menyediakan platform interaktif dan ramah pengguna untuk mengelola dan menjelajahi kursus online.
 
-## Getting Started
+🚀 Memulai
+Untuk memulai server pengembangan, gunakan salah satu perintah berikut:
 
-First, run the development server:
-
-```bash
+bash
+Salin kode
 npm run dev
-# or
+# atau
 yarn dev
-# or
+# atau
 pnpm dev
-# or
+# atau
 bun dev
-```
+Kemudian, buka browser Anda dan navigasikan ke http://localhost:3000 untuk melihat aplikasi beraksi.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+✨ Fitur
+Manajemen Kursus Dinamis: Tambahkan, lihat, dan kelola kursus dengan mudah.
+Tampilan Materi Interaktif: Tonton video dan jelajahi materi kursus dengan nyaman.
+Performa Teroptimasi: Dibangun dengan Next.js untuk performa yang sangat cepat dan SEO.
+🌐 Demo Langsung
+Rasakan versi langsung dari aplikasi ini di sini: Demo Course Online Hasnur
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+📚 Pelajari Lebih Lanjut
+Jelajahi Next.js dan fitur-fiturnya dengan sumber daya berikut:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# course-online-hasnur
+Dokumentasi Next.js - Panduan komprehensif tentang fitur dan API Next.js.
+Belajar Next.js - Tutorial interaktif untuk menguasai Next.js.
+Repositori GitHub Next.js - Kontribusi dan beri masukan.
+📦 Deploy
+Untuk mem-deploy aplikasi Next.js Anda dengan mudah, gunakan Vercel, pembuat Next.js. Untuk petunjuk deployment yang lebih rinci, lihat dokumentasi deployment Next.js.
