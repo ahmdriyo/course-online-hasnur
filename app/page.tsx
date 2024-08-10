@@ -1,113 +1,175 @@
+"use client";
+import YouTube from "react-youtube";
+import { firestore } from "@/firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import React, { useEffect, useState } from "react";
+import { HiDotsVertical } from "react-icons/hi";
+import { useRouter } from "next/navigation";
+import { AiOutlineSchedule, AiTwotoneSchedule } from "react-icons/ai";
+import { MdOutlineVideoLibrary } from "react-icons/md";
 import Image from "next/image";
-
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+import time from "./asset/svg/time.svg";
+import { FaRectangleList } from "react-icons/fa6";
+interface Course {
+  id: string;
+  judul: string;
+  deskripsi: string;
+  durasi: string;
 }
+
+interface Material {
+  id: string;
+  judul: string;
+  deskripsi: string;
+  linkEmbed: string;
+}
+
+const CourseAndMaterialList = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [materials, setMaterials] = useState<Record<string, Material[]>>({});
+  const [activeCourseId, setActiveCourseId] = useState<string | null>(null);
+  const popupRef = React.useRef<HTMLDivElement | null>(null);
+  const router = useRouter();
+
+  const opts = {
+    height: "170",
+    width: "300",
+    playerVars: {
+      autoplay: 0,
+    },
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const courseRef = collection(firestore, "course");
+        const courseSnapshot = await getDocs(courseRef);
+        const allCourses: Course[] = courseSnapshot.docs.map(
+          (doc) =>
+            ({
+              id: doc.id,
+              ...doc.data(),
+            } as Course)
+        );
+        setCourses(allCourses);
+
+        const courseMaterials: Record<string, Material[]> = {};
+        for (const courseDoc of courseSnapshot.docs) {
+          const materialRef = collection(courseDoc.ref, "material");
+          const materialSnapshot = await getDocs(materialRef);
+          const courseMaterialList: Material[] = materialSnapshot.docs.map(
+            (doc) =>
+              ({
+                id: doc.id,
+                ...doc.data(),
+              } as Material)
+          );
+          courseMaterials[courseDoc.id] = courseMaterialList;
+        }
+        setMaterials(courseMaterials);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const togglePopup = (id: string) => {
+    setActiveCourseId(id === activeCourseId ? null : id);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (popupRef.current && !popupRef.current.contains(event.target as Node)) {
+      setActiveCourseId(null);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleEdit = (id: string) => {
+    router.push(`/pages/material/editMaterial/${id}`);
+  };
+  return (
+    <div>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div>
+          {courses.map((course) => (
+            <div
+              key={course.id}
+              className="bg-[#fff] border-[3px] border-[#EEEEEE] rounded-xl m-1 md:mt-0 h-auto text-black py-4 flex flex-col items-center transition-all duration-300 ease-in-out md:ml-[224px]"
+            >
+              <div className="flex flex-row justify-between px-7 items-center w-full border-b-[3px] pb-2">
+                <div className=" flex flex-row items-center gap-2 ">
+                  <MdOutlineVideoLibrary
+                    size={22}
+                    className=" text-[#EB9251]"
+                  />
+                  <h1 className="font-poppins font-bold text-[#EB9251]">
+                    Course
+                  </h1>
+                </div>
+                <h1 className="font-bold font-poppins">{course.judul}</h1>
+                <div>
+                  <AiTwotoneSchedule size={22} className=" text-[#EB9251]" />
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row w-full h-full justify-between sm:items-center items-start px-5 mt-3">
+                <p className="w-[70%]">{course.deskripsi}</p>
+                <div className="flex flex-row items-center justify-between px-4 bg-[#C1E4D3] w-[150px] h-12 rounded-[10px] mt-3 border-[3px] border-[#D4AEAE] hover:bg-[#b8d9c9]">
+                  <Image alt="" src={time} />
+                  <p>{course.durasi}</p>
+                </div>
+              </div>
+              {materials[course.id]?.length > 0 && (
+                <div className="mt-4">
+                  <div className="flex flex-row gap-2 items-center justify-center w-[130px] h-8 rounded-md border-[3px] ml-5 border-[#EB9251] bg-transparent hover:bg-[#eae7e4] transition-colors duration-300 ">
+                    <FaRectangleList size={20} className="text-[#EB9251] "/>
+                    <h2 className="text-[12px] font-bold text-[#EB9251] ">
+                      List Materials
+                    </h2>
+                  </div>
+
+                  {materials[course.id].map((material) => (
+                    <div
+                      key={material.id}
+                      className="bg-[#fff] m-1 md:mt-0 h-auto text-black py-4 flex flex-col items-center transition-all duration-300 ease-in-out"
+                    >
+                      <div className="flex flex-col lg:flex-row w-full rounded-lg pl-4">
+                        <div className="w-full md:w-[34%]">
+                          <YouTube videoId={material.linkEmbed} opts={opts} />
+                        </div>
+                        <div className="flex flex-col w-full ml-0 lg:ml-16 mr-2">
+                          <div className="flex items-center justify-between mb-2 lg:mr-0 mr-3">
+                            <h1 className="text-xl font-bold text-gray-800">
+                              {material.judul}
+                            </h1>
+                          </div>
+                          <div className="p-4 bg-gray-100 rounded-lg text-gray-700 lg:mr-0 mr-3">
+                            {material.deskripsi}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default CourseAndMaterialList;
